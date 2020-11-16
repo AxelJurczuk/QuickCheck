@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/logInFragment">
+
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.example.android.quickcheck.authentication.LogInFragment"
+        android:label="Log in"
+        tools:layout="@layout/fragment_log_in">
+        <action
+            android:id="@+id/action_logInFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.android.quickcheck.authentication.SignInFragment"
+        android:label="Sign in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.android.quickcheck.authentication.ForgotPasswordFragment"
+        android:label="Forgot password"
+        tools:layout="@layout/fragment_forgot_password" />
+</navigation>
