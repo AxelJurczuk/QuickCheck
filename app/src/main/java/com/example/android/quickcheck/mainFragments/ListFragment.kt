@@ -133,6 +133,8 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
                             "Absent list saved!",
                             Toast.LENGTH_SHORT
                         ).show()
+                        //leave current fragment
+                        goBack()
                     }
                     .addOnFailureListener {
                         Toast.makeText(
@@ -155,6 +157,13 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
             "name" to student.name,
             "status" to student.status
         )
+    }
+    private fun goBack (){
+        val fragment = OptionsFragment()
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.frame_layout, fragment)
+        transaction?.disallowAddToBackStack()
+        transaction?.commit()
     }
 
     override fun onItemCheckedChanged(position: Int, checked: Boolean) {

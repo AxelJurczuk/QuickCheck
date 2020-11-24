@@ -55,7 +55,7 @@ class QueryFragment : Fragment(), ItemAdapter.OnItemClick {
         binding.queryListButton.setOnClickListener {
 
             val bundle = arguments
-            val group: String? = bundle?.getString("group name")
+            val group: String? = bundle?.getString("groupName")
             val date: String =
                 binding.pickDateEditText.text.toString()//escribe sin el 0 delante del dia 4-11-2020
 

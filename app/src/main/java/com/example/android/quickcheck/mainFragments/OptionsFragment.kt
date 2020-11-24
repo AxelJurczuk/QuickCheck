@@ -32,23 +32,23 @@ class OptionsFragment : Fragment() {
 
         binding.btnEditAbsents.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("group name", group)
+            bundle.putString("groupName", group)
             val fragment = ListFragment()
             fragment.arguments = bundle
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.frame_layout, fragment)
-            transaction?.disallowAddToBackStack()
+            transaction?.addToBackStack(null)
             transaction?.commit()
         }
 
         binding.btnSearchAbsents.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("group name", group)
+            bundle.putString("groupName", group)
             val fragment = QueryFragment()
             fragment.arguments = bundle
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.frame_layout, fragment)
-            transaction?.disallowAddToBackStack()
+            transaction?.addToBackStack(null)
             transaction?.commit()
         }
     }
