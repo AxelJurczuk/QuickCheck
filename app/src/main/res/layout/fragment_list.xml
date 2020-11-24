@@ -22,17 +22,9 @@
         android:layout_height="wrap_content"
         android:enabled="false"
         android:padding="16dp"
-        android:text="guardar lista"
+        android:text="@string/save_list"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
-
-    <Button
-        android:id="@+id/query_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="consultar ausentes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/save_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

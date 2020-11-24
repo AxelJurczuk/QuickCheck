@@ -11,25 +11,15 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/logIn_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:paddingBottom="32dp"
-            android:text="@string/login"
-            android:textSize="40sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/email_address"
+            android:textAllCaps="false"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logIn_text" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/email_editText"
@@ -47,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/password"
+            android:textAllCaps="false"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_editText" />
@@ -62,11 +53,12 @@
             app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
         <Button
-            android:id="@+id/forgotPassword_button"
+            android:id="@+id/btn_forgotPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/forgot_your_password"
+            android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password_editText" />
 
@@ -76,18 +68,28 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/login"
+            android:textAllCaps="false"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/forgotPassword_button" />
+            app:layout_constraintTop_toBottomOf="@id/btn_forgotPassword" />
 
-        <Button
-            android:id="@+id/skip_button"
+        <TextView
+            android:id="@+id/tv_dontHaveAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="skip login"
-            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/logIn_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logIn_button" />
+            android:text="@string/don_t_have_an_account"/>
+
+        <Button
+            android:id="@+id/btn_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_dontHaveAccount"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

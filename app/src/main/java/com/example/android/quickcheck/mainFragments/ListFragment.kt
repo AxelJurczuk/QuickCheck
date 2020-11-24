@@ -36,6 +36,7 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentListBinding.inflate(layoutInflater)
+
         return binding.root
     }
 
@@ -44,63 +45,108 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
 
         super.onViewCreated(view, savedInstanceState)
 
+        val parameters = arguments
+
+        //activity?.title = parameters?.getString("groupName").toString()
+
         adapter = ItemAdapter(requireContext(), this@ListFragment)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-
         if (recyclerView != null) {
             recyclerView.adapter = adapter
             recyclerView.setHasFixedSize(true)
         }
 
-        DataSource().loadFirstStudents(object : DataSource.DataFetched {
-            override fun onFetched(studentList: List<Student>) {
-                adapter.studentItemsList = studentList
-                adapter.notifyDataSetChanged()
-                binding.saveButton.isEnabled=true
+        when (parameters?.getString("groupName")) {
+            "Year1" -> {
+                DataSource().loadFirstStudents(object : DataSource.DataFetched {
+                    override fun onFetched(studentList: List<Student>) {
+                        adapter.studentItemsList = studentList
+                        adapter.notifyDataSetChanged()
+                        binding.saveButton.isEnabled = true
+                    }
+                })
             }
-        })
+            "Year2" -> {
+                DataSource().loadSecondStudents(object : DataSource.DataFetched {
+                    override fun onFetched(studentList: List<Student>) {
+                        adapter.studentItemsList = studentList
+                        adapter.notifyDataSetChanged()
+                        binding.saveButton.isEnabled = true
+                    }
+                })
+            }
+            "Year3" -> {
+                DataSource().loadThirdStudents(object : DataSource.DataFetched {
+                    override fun onFetched(studentList: List<Student>) {
+                        adapter.studentItemsList = studentList
+                        adapter.notifyDataSetChanged()
+                        binding.saveButton.isEnabled = true
+                    }
+                })
+            }
+            "Year4" -> {
+                DataSource().loadFourthStudents(object : DataSource.DataFetched {
+                    override fun onFetched(studentList: List<Student>) {
+                        adapter.studentItemsList = studentList
+                        adapter.notifyDataSetChanged()
+                        binding.saveButton.isEnabled = true
+                    }
+                })
+            }
+            "Year5" -> {
+                DataSource().loadFifthStudents(object : DataSource.DataFetched {
+                    override fun onFetched(studentList: List<Student>) {
+                        adapter.studentItemsList = studentList
+                        adapter.notifyDataSetChanged()
+                        binding.saveButton.isEnabled = true
+                    }
+                })
+            }
+        }
 
         val date: LocalDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val parsedDate = date.format(formatter).toString()
         Log.d("date", parsedDate)
+        //reference for current group
+        val group = parameters?.getString("groupName")
 
         binding.saveButton.setOnClickListener {
 
             val studentsList = adapter.studentItemsList
             val absentList = studentsList.filter { it.status == false }
-
             val mutableStudentsMap = mutableMapOf<String, Any>()
+            var docReference = 0
 
-            var docReference=0
             absentList.forEach { student ->
                 mutableStudentsMap.putAll(convertToMap(student))
                 docReference++
                 db.collection("ausentes")
                     .document(parsedDate)
-                    .collection("absent students")
+                    .collection(group.toString())
                     .document(docReference.toString())
                     .set(mutableStudentsMap)
-                    .addOnSuccessListener { Toast.makeText(requireContext(),
-                        "Document successfully saved!",
-                        Toast.LENGTH_SHORT).show()}
-                    .addOnFailureListener { Toast.makeText(requireContext(),
-                        "Error saving document",
-                        Toast.LENGTH_SHORT).show() }
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Absent list saved!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error saving document",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
             }
         }
         /*
        TODO :
        que pasa si es 1era vez y no hay conexion
     */
-
-        binding.queryButton.setOnClickListener {
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.frame_layout, QueryFragment())
-            transaction?.disallowAddToBackStack()
-            transaction?.commit()
-        }
     }
 
     private fun convertToMap(student: Student): Map<String, Any> {
@@ -118,16 +164,4 @@ class ListFragment : Fragment(), ItemAdapter.OnItemClick {
     override fun onItemClickListener(position: Int) {
         //Toast.makeText(requireContext(),"${adapter.studentItemsList[position].name}", Toast.LENGTH_SHORT).show()
     }
-
-    /*
-        val parameters = arguments
-        when (parameters?.getString("groupName")){
-            "firstYear"->{myDataset = DataSource().loadFirstStudents()}
-            "secondYear"->{myDataset = DataSource().loadSecondStudents()}
-            "thirdYear"->{myDataset = DataSource().loadThirdStudents()}
-            "fourthYear"->{myDataset = DataSource().loadFourthStudents()}
-            "fifthYear"->{myDataset = DataSource().loadFifthStudents()}
-        }
-         */
-
 }

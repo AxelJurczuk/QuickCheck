@@ -23,7 +23,7 @@
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:focusable="false"
-        android:hint="enter a date"
+        android:hint="@string/enter_a_date"
         android:importantForAutofill="no"
         android:inputType="date"
         android:maxLines="1"
@@ -38,7 +38,8 @@
         android:layout_marginTop="36dp"
         android:enabled="false"
         android:padding="16dp"
-        android:text="consult"
+        android:text="@string/consult"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pick_date_editText" />
 

@@ -46,12 +46,14 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-firestore-ktx:22.0.0'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
+    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 }

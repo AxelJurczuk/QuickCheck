@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.android.quickcheck.databinding.ActivityStudentsListsBinding
 import com.example.android.quickcheck.mainFragments.ListFragment
+import com.example.android.quickcheck.mainFragments.OptionsFragment
 
 class ActivityStudentLists : AppCompatActivity() {
 
@@ -15,10 +16,14 @@ class ActivityStudentLists : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val bundle:Bundle? = intent.extras
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
 
-        val listFragment = ListFragment()
-        listFragment.arguments = bundle
-        supportFragmentManager.beginTransaction().add(R.id.frame_layout, listFragment).commit()
+        val bundle: Bundle? = intent.extras
+
+        supportActionBar?.title = bundle?.getString("groupName")
+        val optionsFragment = OptionsFragment()
+        optionsFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().add(R.id.frame_layout, optionsFragment).commit()
     }
 }

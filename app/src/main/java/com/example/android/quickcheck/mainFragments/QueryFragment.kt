@@ -39,7 +39,7 @@ class QueryFragment : Fragment(), ItemAdapter.OnItemClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ItemAdapter(requireContext(),this@QueryFragment)
+        adapter = ItemAdapter(requireContext(), this@QueryFragment)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_absents)
 
@@ -54,28 +54,34 @@ class QueryFragment : Fragment(), ItemAdapter.OnItemClick {
 
         binding.queryListButton.setOnClickListener {
 
-            val date:String = binding.pickDateEditText.text.toString()//escribe sin el 0 delante del dia 4-11-2020
-            Log.d("date", date)
+            val bundle = arguments
+            val group: String? = bundle?.getString("group name")
+            val date: String =
+                binding.pickDateEditText.text.toString()//escribe sin el 0 delante del dia 4-11-2020
 
-            DataSource().loadAbsentStudents(date, object : DataSource.DataFetched {
-                override fun onFetched(studentList: List<Student>) {
-                    adapter.studentItemsList = studentList
-                    adapter.notifyDataSetChanged()
-                    Log.d("students",studentList.toString())
-                }
-            })
+            DataSource().loadAbsentStudents(
+                date,
+                group.toString(),
+                object : DataSource.DataFetched {
+                    override fun onFetched(studentList: List<Student>) {
+                        adapter.studentItemsList = studentList
+                        adapter.notifyDataSetChanged()
+                        Log.d("students", studentList.toString())
+                    }
+                })
         }
     }
 
-    private fun showDatePickerDialog(){
-        val newFragment = DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            // +1 because January is zero
-            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-            val selectedDate = LocalDate.of(year, month+1, day).format(formatter)
+    private fun showDatePickerDialog() {
+        val newFragment =
+            DatePickerFragment.newInstance(DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                // +1 because January is zero
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val selectedDate = LocalDate.of(year, month + 1, day).format(formatter)
 
-            binding.pickDateEditText.setText(selectedDate)
-            binding.queryListButton.isEnabled=true
-        })
+                binding.pickDateEditText.setText(selectedDate)
+                binding.queryListButton.isEnabled = true
+            })
         newFragment.show(childFragmentManager, "datePicker")
     }
 

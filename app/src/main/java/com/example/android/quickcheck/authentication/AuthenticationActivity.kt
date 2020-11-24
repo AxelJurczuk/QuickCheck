@@ -7,24 +7,53 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.quickcheck.MainActivity
 import com.example.android.quickcheck.R
-import com.example.android.quickcheck.databinding.ActivityLogInBinding
+import com.example.android.quickcheck.databinding.ActivityAuthenticationBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+
 
 class AuthenticationActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLogInBinding
+    private lateinit var binding: ActivityAuthenticationBinding
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityLogInBinding.inflate(layoutInflater)
+        binding=ActivityAuthenticationBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        val navController = this.findNavController(R.id.myNavHostFragment)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        val toolbar = binding.toolbar2
+        setSupportActionBar(toolbar)
+
+        auth = FirebaseAuth.getInstance()
+
+        //listener to check if the user is logged in
+        authStateListener = FirebaseAuth.AuthStateListener { auth ->
+            val firebaseUser = auth.currentUser
+            if (firebaseUser != null) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.frame_layout, LogInFragment())
+            .commit()
+    }
+    override fun onStart() {
+        super.onStart()
+        auth.addAuthStateListener(this.authStateListener)
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.myNavHostFragment)
-        return navController.navigateUp()
+    override fun onStop() {
+        super.onStop()
+        auth.removeAuthStateListener(this.authStateListener)
+
     }
+
 }

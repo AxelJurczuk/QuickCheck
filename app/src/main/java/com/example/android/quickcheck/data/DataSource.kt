@@ -25,54 +25,31 @@ class DataSource {
                 Log.d("download failed", "downloading failed", exception)
             }
     }
-    fun loadAbsentStudents(date:String,successListener: DataFetched) {
+
+    fun loadSecondStudents(successListener: DataFetched) {
         val studentsList = mutableListOf<Student>()
 
-        db.collection("ausentes")
-            .document(date)
-            .collection("absent students")
+        db.collection("groups")
+            .document("group2")
+            .collection("students")
             .get()
-            .addOnSuccessListener {documents ->
+            .addOnSuccessListener { documents ->
                 for (document in documents) {
                     studentsList.add(document.toObject(Student::class.java))
                 }
                 successListener.onFetched(studentsList)
             }
             .addOnFailureListener { exception ->
-                Log.d("download failed", "download failed", exception)
+                Log.d("download failed", "downloading failed", exception)
             }
     }
 
-    fun loadSecondStudents(): MutableList<Student> {
-
-        return mutableListOf(
-            Student("Gonzalez", "Mauricio", false),
-            Student("Martinez", "Mauri", false),
-            Student("Perez", "Marco", false),
-            Student("Juarez", "Fernando", false),
-            Student("Fabbiani", "Marta", false),
-            Student("Ulises", "Maria", false),
-            Student("Cope", "Florencia", false),
-            Student("Colon", "Emanuel", false),
-            Student("Barbeito", "Carlitos", false),
-            Student("Gonzales", "Mauricio", false),
-            Student("Marcunez", "Mauri", false),
-            Student("Pirz", "Marco", false),
-            Student("Juacoz", "Fernando", false),
-            Student("Fatai", "Marta", false),
-            Student("Ulimus", "Maria", false),
-            Student("Copato", "Florencia", false),
-            Student("Casas", "Emanuel", false),
-            Student("Barbosa", "Carlitos", false),
-        )
-
-    }
 
     fun loadThirdStudents(successListener: DataFetched) {
         val studentsList = mutableListOf<Student>()
 
         db.collection("groups")
-            .document("group1")
+            .document("group3")
             .collection("students")
             .get()
             .addOnSuccessListener { documents ->
@@ -85,39 +62,56 @@ class DataSource {
             }
     }
 
-    fun loadFourthStudents(): MutableList<Student> {
+    fun loadFourthStudents(successListener: DataFetched) {
         val studentsList = mutableListOf<Student>()
 
-        db.collection("groups").document("group1").collection("students")
+        db.collection("groups")
+            .document("group4")
+            .collection("students")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    Log.v("status data students", "${document.id} => ${document.data}")
 
                     studentsList.add(document.toObject(Student::class.java))
+
                 }
-                Log.v("lista", "$studentsList")
+                successListener.onFetched(studentsList)
             }
-
-        return studentsList
-
     }
 
-    fun loadFifthStudents(): MutableList<Student> {
+    fun loadFifthStudents(successListener: DataFetched) {
         val studentsList = mutableListOf<Student>()
 
-        db.collection("groups").document("group1").collection("students")
+        db.collection("groups")
+            .document("group5")
+            .collection("students")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    Log.v("status data students", "${document.id} => ${document.data}")
 
                     studentsList.add(document.toObject(Student::class.java))
-                }
-                Log.v("lista", "$studentsList")
-            }
 
-        return studentsList
+                }
+                successListener.onFetched(studentsList)
+            }
+    }
+
+    fun loadAbsentStudents(date:String,group:String,successListener: DataFetched) {
+        val studentsList = mutableListOf<Student>()
+
+        db.collection("ausentes")
+            .document(date)
+            .collection(group)
+            .get()
+            .addOnSuccessListener {documents ->
+                for (document in documents) {
+                    studentsList.add(document.toObject(Student::class.java))
+                }
+                successListener.onFetched(studentsList)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("download failed", "download failed", exception)
+            }
     }
 
     interface DataFetched {
